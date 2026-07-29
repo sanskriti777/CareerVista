@@ -1,5 +1,15 @@
+import MainLayout from "../layouts/MainLayout";
+
 function Dashboard() {
-  return <h1>Dashboard Page</h1>;
+  return (
+    <MainLayout>
+
+      <h1>Dashboard</h1>
+
+      <p>Welcome to CareerVista 🚀</p>
+
+    </MainLayout>
+  );
 }
 
 export default Dashboard;

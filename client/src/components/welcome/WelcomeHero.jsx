@@ -1,5 +1,6 @@
 import "./WelcomeHero.css";
 import logo from "../../assets/logo.png";
+import welcomeImage from "../../assets/images/welcome.png";
 import { Link } from "react-router-dom";
 
 function WelcomeHero() {
@@ -9,13 +10,20 @@ function WelcomeHero() {
 
         <img src={logo} alt="CareerVista Logo" className="welcome-logo" />
 
-        <h1>Welcome to CareerVista</h1>
+        <h1>
+          Welcome to <span>CareerVista</span>
+        </h1>
 
         <p className="subtitle">
-          AI-Powered Job Market Intelligence &
-          <br />
-          Career Recommendation Platform
+          Discover jobs, analyze market trends, and build your career with
+          AI-powered insights.
         </p>
+
+        <img
+          src={welcomeImage}
+          alt="Career Illustration"
+          className="welcome-image"
+        />
 
         <Link to="/login">
           <button className="primary-btn">
@@ -23,9 +31,15 @@ function WelcomeHero() {
           </button>
         </Link>
 
+        <Link to="/login">
+          <button className="secondary-btn">
+            Login
+          </button>
+        </Link>
+
         <p className="login-text">
-          Already have an account?
-          <Link to="/login"> Login</Link>
+          New here?
+          <Link to="/register"> Create an account</Link>
         </p>
 
       </div>

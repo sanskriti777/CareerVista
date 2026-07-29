@@ -1,11 +1,18 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@import "./variables.css";
+@import "./components.css";
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-  background: #F5F7FA;
-  color: #1F2937;
+body{
+
+    font-family:var(--font);
+
+    background:var(--background);
+
 }

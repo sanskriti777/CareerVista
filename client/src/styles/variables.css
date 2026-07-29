@@ -1,0 +1,23 @@
+:root {
+
+  /* Colors */
+  --primary: #5B21B6;
+  --primary-light: #7C3AED;
+  --background: #F8F5FF;
+  --white: #FFFFFF;
+  --text: #111827;
+  --text-light: #6B7280;
+  --border: #E5E7EB;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+
+  /* Shadow */
+  --shadow: 0 20px 45px rgba(91,33,182,.15);
+
+  /* Font */
+  --font: "Poppins", sans-serif;
+
+}
