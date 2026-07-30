@@ -7,23 +7,18 @@ import FilterPanel from "../components/jobs/FilterPanel";
 import JobCard from "../components/jobs/JobCard";
 
 import { jobs } from "../data/jobsData";
+import { useSavedJobs } from "../context/SavedJobsContext";
 
 function Jobs() {
+  // Search State
   const [search, setSearch] = useState("");
+
+  // Filter States
   const [location, setLocation] = useState("");
   const [jobType, setJobType] = useState("");
 
-  // Saved Jobs State
-  const [savedJobs, setSavedJobs] = useState([]);
-
-  // Save / Unsave Job
-  const toggleSaveJob = (id) => {
-    if (savedJobs.includes(id)) {
-      setSavedJobs(savedJobs.filter((jobId) => jobId !== id));
-    } else {
-      setSavedJobs([...savedJobs, id]);
-    }
-  };
+  // Global Saved Jobs Context
+  const { savedJobs, toggleSaveJob } = useSavedJobs();
 
   // Search + Filter Logic
   const filteredJobs = jobs.filter((job) => {

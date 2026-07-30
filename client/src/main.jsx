@@ -1,10 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './styles/global.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-createRoot(document.getElementById('root')).render(
+import "./index.css";
+
+import App from "./App.jsx";
+
+import { SavedJobsProvider } from "./context/SavedJobsContext";
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <SavedJobsProvider>
+      <App />
+    </SavedJobsProvider>
+  </StrictMode>
+);
