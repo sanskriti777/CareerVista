@@ -1,0 +1,37 @@
+.skills{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.skill-list{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:20px;
+
+}
+
+.skill-list span{
+
+    background:#ede9fe;
+
+    color:#5B21B6;
+
+    padding:10px 16px;
+
+    border-radius:30px;
+
+    font-weight:600;
+
+}

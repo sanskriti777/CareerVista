@@ -1,0 +1,18 @@
+.jobs-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+@media (max-width: 900px) {
+  .jobs-container {
+    grid-template-columns: 1fr;
+  }
+}

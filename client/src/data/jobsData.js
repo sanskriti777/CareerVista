@@ -1,0 +1,38 @@
+export const jobs = [
+  {
+    id: 1,
+    title: "Frontend Developer",
+    company: "Google",
+    location: "Bangalore",
+    type: "Full Time",
+    salary: "$1,500/month",
+    skills: ["React", "JavaScript", "CSS"],
+  },
+  {
+    id: 2,
+    title: "React Developer",
+    company: "Microsoft",
+    location: "Hyderabad",
+    type: "Internship",
+    salary: "$1,000/month",
+    skills: ["React", "Redux", "Git"],
+  },
+  {
+    id: 3,
+    title: "Node.js Developer",
+    company: "Amazon",
+    location: "Pune",
+    type: "Full Time",
+    salary: "$1,800/month",
+    skills: ["Node.js", "Express", "MongoDB"],
+  },
+  {
+    id: 4,
+    title: "Software Engineer",
+    company: "Adobe",
+    location: "Noida",
+    type: "Hybrid",
+    salary: "$1,700/month",
+    skills: ["Java", "SQL", "Git"],
+  },
+];

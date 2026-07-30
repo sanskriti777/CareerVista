@@ -5,7 +5,7 @@ function MainLayout({ children }) {
     <div style={{ display: "flex" }}>
       <Sidebar />
 
-      <main style={{ flex: 1, padding: "30px" }}>
+      <main style={{ flex: 1, padding: "30px" ,marginLeft: "260px", }}>
         {children}
       </main>
     </div>

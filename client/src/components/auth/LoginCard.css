@@ -94,3 +94,9 @@
   color: #5b21b6;
   font-weight: 600;
 }
+.error-text{
+    color:#EF4444;
+    font-size:14px;
+    margin:6px 0 12px;
+    text-align:left;
+}

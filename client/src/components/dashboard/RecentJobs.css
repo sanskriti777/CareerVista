@@ -1,0 +1,14 @@
+.job-item h4{
+    margin-bottom:5px;
+}
+
+.job-item p{
+    color:#5B21B6;
+    font-weight:600;
+    margin-bottom:5px;
+}
+
+.job-item span{
+    color:#6B7280;
+    font-size:14px;
+}

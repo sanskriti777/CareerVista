@@ -12,6 +12,9 @@
     padding:30px;
 
     box-shadow:var(--shadow);
+    position: fixed;
+    left: 0;
+    top: 0;
 
 }
 
