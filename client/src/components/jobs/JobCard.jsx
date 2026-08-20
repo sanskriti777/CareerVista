@@ -1,17 +1,26 @@
 import "./JobCard.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function JobCard({ job, savedJobs, toggleSaveJob }) {
+  const navigate = useNavigate();
+
   const isSaved = savedJobs.includes(job.id);
 
   return (
-    <div className="job-card">
+    <div
+      className="job-card"
+      onClick={() => navigate(`/job/${job.id}`)}
+    >
       <div className="job-header">
         <h3>{job.title}</h3>
 
         <button
           className="heart-btn"
-          onClick={() => toggleSaveJob(job.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleSaveJob(job.id);
+          }}
         >
           {isSaved ? <FaHeart /> : <FaRegHeart />}
         </button>
@@ -32,7 +41,13 @@ function JobCard({ job, savedJobs, toggleSaveJob }) {
         ))}
       </div>
 
-      <button className="apply-btn">
+      <button
+        className="apply-btn"
+        onClick={(e) => {
+          e.stopPropagation();
+          navigate(`/job/${job.id}`);
+        }}
+      >
         Apply Now
       </button>
     </div>
