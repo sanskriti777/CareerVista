@@ -1,10 +1,18 @@
 .saved-title {
-  margin-bottom: 30px;
-  color: #5b21b6;
+  margin-bottom: 25px;
+  color: var(--accent, #5b21b6);
+  font-size: 24px;
 }
 
 .saved-jobs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 25px;
+}
+
+@media (max-width: 640px) {
+  .saved-jobs-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
 }

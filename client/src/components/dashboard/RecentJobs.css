@@ -1,14 +1,52 @@
-.job-item h4{
-    margin-bottom:5px;
+.recent-jobs {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 25px -5px rgba(109, 40, 217, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
 }
 
-.job-item p{
-    color:#5B21B6;
-    font-weight:600;
-    margin-bottom:5px;
+.recent-jobs h2 {
+  font-size: 18px;
+  color: #0f172a;
+  margin: 0 0 20px;
+  font-weight: 700;
 }
 
-.job-item span{
-    color:#6B7280;
-    font-size:14px;
+.job-item {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #f1f5f9;
+  background: #f8fafc;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-item:hover {
+  background: #ffffff;
+  border-color: #c4b5fd;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.08);
+}
+
+.job-item-details h4 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.job-item-details p {
+  color: #6d28d9;
+  font-weight: 600;
+  font-size: 13px;
+  margin: 0 0 2px;
+}
+
+.job-item-details span {
+  color: #64748b;
+  font-size: 12px;
 }

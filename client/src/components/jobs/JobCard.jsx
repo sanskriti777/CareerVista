@@ -2,10 +2,12 @@ import "./JobCard.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-function JobCard({ job, savedJobs, toggleSaveJob }) {
+function JobCard({ job, savedJobs, toggleSaveJob, onOpenApplyModal }) {
   const navigate = useNavigate();
 
   const isSaved = savedJobs.includes(job.id);
+
+  const companyLetter = job.company ? job.company.charAt(0) : "C";
 
   return (
     <div
@@ -13,7 +15,13 @@ function JobCard({ job, savedJobs, toggleSaveJob }) {
       onClick={() => navigate(`/job/${job.id}`)}
     >
       <div className="job-header">
-        <h3>{job.title}</h3>
+        <div className="company-branding">
+          <div className="company-logo-badge">{companyLetter}</div>
+          <div>
+            <h3>{job.title}</h3>
+            <p className="company">{job.company}</p>
+          </div>
+        </div>
 
         <button
           className="heart-btn"
@@ -21,19 +29,17 @@ function JobCard({ job, savedJobs, toggleSaveJob }) {
             e.stopPropagation();
             toggleSaveJob(job.id);
           }}
+          title={isSaved ? "Remove from saved" : "Save job"}
         >
           {isSaved ? <FaHeart /> : <FaRegHeart />}
         </button>
       </div>
 
-      <p className="company">{job.company}</p>
-
-      <div className="job-info">
-        <span>📍 {job.location}</span>
-        <span>💼 {job.type}</span>
+      <div className="job-metadata-pills">
+        <span className="badge-salary">💰 {job.salary}</span>
+        <span className="badge-type">💼 {job.type}</span>
+        <span className="badge-exp">📍 {job.location}</span>
       </div>
-
-      <h4>{job.salary}</h4>
 
       <div className="skills">
         {job.skills.map((skill, index) => (
@@ -45,7 +51,11 @@ function JobCard({ job, savedJobs, toggleSaveJob }) {
         className="apply-btn"
         onClick={(e) => {
           e.stopPropagation();
-          navigate(`/job/${job.id}`);
+          if (onOpenApplyModal) {
+            onOpenApplyModal(job);
+          } else {
+            navigate(`/job/${job.id}`);
+          }
         }}
       >
         Apply Now

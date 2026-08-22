@@ -1,5 +1,6 @@
 .splash-container {
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,12 +11,16 @@
     #f8f5ff 45%,
     #ede9fe 100%
   );
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .logo {
-  width: 190px;
+  width: 100%;
+  max-width: 190px;
   margin-bottom: 25px;
-  animation: logoAnimation 1.2s ease-in-out;
+  animation: logoAnimation 0.35s ease-out;
 }
 
 .splash-container h1 {
@@ -27,6 +32,15 @@
 .splash-container p {
   font-size: 18px;
   color: #6B7280;
+}
+
+@media (max-width: 480px) {
+  .splash-container h1 {
+    font-size: 32px;
+  }
+  .splash-container p {
+    font-size: 16px;
+  }
 }
 
 @keyframes logoAnimation {

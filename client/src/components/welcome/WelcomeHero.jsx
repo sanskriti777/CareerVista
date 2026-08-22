@@ -7,41 +7,41 @@ function WelcomeHero() {
   return (
     <div className="welcome-container">
       <div className="welcome-card">
+        <div className="welcome-content-left">
+          <img src={logo} alt="CareerVista Logo" className="welcome-logo" />
 
-        <img src={logo} alt="CareerVista Logo" className="welcome-logo" />
+          <h1>
+            Welcome to <span>CareerVista</span>
+          </h1>
 
-        <h1>
-          Welcome to <span>CareerVista</span>
-        </h1>
+          <p className="subtitle">
+            Discover jobs, analyze market trends, and build your career with
+            AI-powered insights.
+          </p>
 
-        <p className="subtitle">
-          Discover jobs, analyze market trends, and build your career with
-          AI-powered insights.
-        </p>
+          <div className="welcome-actions">
+            <Link to="/login">
+              <button className="primary-btn">Get Started</button>
+            </Link>
 
-        <img
-          src={welcomeImage}
-          alt="Career Illustration"
-          className="welcome-image"
-        />
+            <Link to="/login">
+              <button className="secondary-btn">Login</button>
+            </Link>
+          </div>
 
-        <Link to="/login">
-          <button className="primary-btn">
-            Get Started
-          </button>
-        </Link>
+          <p className="login-text">
+            New here?
+            <Link to="/register"> Create an account</Link>
+          </p>
+        </div>
 
-        <Link to="/login">
-          <button className="secondary-btn">
-            Login
-          </button>
-        </Link>
-
-        <p className="login-text">
-          New here?
-          <Link to="/register"> Create an account</Link>
-        </p>
-
+        <div className="welcome-content-right">
+          <img
+            src={welcomeImage}
+            alt="Career Illustration"
+            className="welcome-image"
+          />
+        </div>
       </div>
     </div>
   );

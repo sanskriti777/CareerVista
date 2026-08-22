@@ -1,7 +1,19 @@
 import "./Topbar.css";
-import { FaBell, FaSearch, FaBars } from "react-icons/fa";
+import { useState } from "react";
+import { FaBell, FaSearch, FaBars, FaSun, FaMoon } from "react-icons/fa";
+import { useTheme } from "../../context/ThemeContext";
+import NotificationDropdown from "./NotificationDropdown";
 
 function Topbar({ onToggleSidebar }) {
+  const { theme, toggleTheme } = useTheme();
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  const todayDate = new Date().toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+
   return (
     <header className="topbar">
       <div className="topbar-left">
@@ -11,20 +23,33 @@ function Topbar({ onToggleSidebar }) {
           </button>
         )}
         <div>
-          <h2>Welcome Back 👋</h2>
-          <p>Let's explore today's opportunities.</p>
+          <h2>Welcome back, Sanskriti 👋</h2>
+          <p>Explore today's top tech opportunities • <strong>{todayDate}</strong></p>
         </div>
       </div>
 
       <div className="topbar-right">
         <div className="search-box">
           <FaSearch />
-          <input type="text" placeholder="Search jobs..." />
+          <input type="text" placeholder="Search jobs, skills, companies..." />
+          <span className="kbd-shortcut">Ctrl K</span>
         </div>
 
-        <button className="notification-btn" aria-label="Notifications">
-          <FaBell />
+        <button className="theme-toggle-btn" onClick={toggleTheme} title="Toggle Dark/Light Mode">
+          {theme === "dark" ? <FaSun style={{ color: "#fbbf24" }} /> : <FaMoon />}
         </button>
+
+        <div style={{ position: "relative" }}>
+          <button
+            className="notification-btn"
+            aria-label="Notifications"
+            onClick={() => setShowNotifications(!showNotifications)}
+          >
+            <FaBell />
+          </button>
+
+          {showNotifications && <NotificationDropdown />}
+        </div>
 
         <div className="profile">
           <div className="avatar">S</div>

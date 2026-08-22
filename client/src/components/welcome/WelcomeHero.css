@@ -4,110 +4,178 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #f8f5ff, #ffffff);
-  padding: 20px;
+  background: radial-gradient(circle at 20% 20%, rgba(109, 40, 217, 0.1) 0%, transparent 40%),
+              radial-gradient(circle at 80% 80%, rgba(79, 70, 229, 0.1) 0%, transparent 40%),
+              linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 40px 20px;
   box-sizing: border-box;
 }
 
 .welcome-card {
   width: 100%;
-  max-width: 470px;
-  background: white;
-  border-radius: 24px;
-  padding: 40px 30px;
-  text-align: center;
-  box-shadow: 0 20px 45px rgba(91, 33, 182, 0.15);
-  transition: 0.3s;
+  max-width: 960px;
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 55px 45px;
+  box-shadow: 0 25px 50px -12px rgba(109, 40, 217, 0.18), 0 0 0 1px rgba(109, 40, 217, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
   box-sizing: border-box;
-}
-
-.welcome-image {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 30px;
-}
-
-@media (max-width: 480px) {
-  .welcome-card {
-    padding: 25px 18px;
-    border-radius: 18px;
-  }
-
-  .welcome-card h1 {
-    font-size: 24px;
-  }
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .welcome-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
+  box-shadow: 0 30px 60px -12px rgba(109, 40, 217, 0.24);
+}
+
+.welcome-content-left {
+  flex: 1.1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.welcome-content-right {
+  flex: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .welcome-logo {
-  width: 90px;
-  margin-bottom: 15px;
+  width: 84px;
+  margin-bottom: 24px;
 }
 
 .welcome-card h1 {
-  font-size: 32px;
-  color: #111827;
-  margin-bottom: 12px;
+  font-size: 38px;
+  color: #0f172a;
+  margin: 0 0 14px;
+  line-height: 1.2;
+  font-weight: 800;
+  font-family: var(--font-heading);
 }
 
 .welcome-card span {
-  color: #5b21b6;
+  background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
-  color: #6b7280;
+  color: #64748b;
   line-height: 1.6;
-  margin-bottom: 25px;
+  font-size: 16px;
+  margin-bottom: 32px;
+  max-width: 440px;
 }
 
 .welcome-image {
-  width: 270px;
-  margin-bottom: 30px;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(109, 40, 217, 0.12));
+}
+
+.welcome-actions {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  max-width: 380px;
+  margin-bottom: 16px;
+}
+
+.welcome-actions a {
+  flex: 1;
 }
 
 .primary-btn {
   width: 100%;
-  padding: 18px;
-  background: #5b21b6;
-  color: white;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
+  color: #ffffff;
   border: none;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-sans);
   cursor: pointer;
-  margin-bottom: 15px;
-  transition: 0.3s;
+  box-shadow: 0 10px 20px -5px rgba(109, 40, 217, 0.3);
+  transition: all 0.25s ease;
 }
 
 .primary-btn:hover {
-  background: #6d28d9;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px -5px rgba(109, 40, 217, 0.4);
 }
 
 .secondary-btn {
   width: 100%;
-  padding: 18px;
-  background: white;
-  border: 2px solid #5b21b6;
-  color: #5b21b6;
+  padding: 14px 24px;
+  background: #ffffff;
+  border: 2px solid #6d28d9;
+  color: #6d28d9;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-sans);
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.25s ease;
 }
 
 .secondary-btn:hover {
-  background: #f3e8ff;
+  background: #f5f3ff;
+  border-color: #5b21b6;
+  transform: translateY(-2px);
 }
 
 .login-text {
-  margin-top: 22px;
-  color: #6b7280;
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 14px;
 }
 
 .login-text a {
-  color: #5b21b6;
+  color: #6d28d9;
   text-decoration: none;
   font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.login-text a:hover {
+  color: #4f46e5;
+}
+
+@media (max-width: 850px) {
+  .welcome-card {
+    flex-direction: column-reverse;
+    padding: 35px 25px;
+    text-align: center;
+    max-width: 480px;
+  }
+
+  .welcome-content-left {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .welcome-card h1 {
+    font-size: 28px;
+  }
+
+  .welcome-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .welcome-image {
+    max-width: 240px;
+    margin-bottom: 10px;
+  }
 }

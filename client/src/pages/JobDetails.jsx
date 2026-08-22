@@ -2,144 +2,129 @@ import "./JobDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { jobs } from "../data/jobsData";
 import { FaArrowLeft, FaMapMarkerAlt, FaBriefcase, FaClock } from "react-icons/fa";
+import MainLayout from "../layouts/MainLayout";
+import Topbar from "../components/dashboard/Topbar";
 
 function JobDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // URL se mili ID ko number me convert karke job find karna
   const job = jobs.find((job) => job.id === Number(id));
 
-  // Agar job exist nahi karti
   if (!job) {
     return (
-      <div className="job-not-found">
-        <h2>Job Not Found</h2>
-
-        <button onClick={() => navigate("/jobs")}>
-          Back to Jobs
-        </button>
-      </div>
+      <MainLayout>
+        <Topbar />
+        <div className="job-not-found">
+          <h2>Job Not Found</h2>
+          <button onClick={() => navigate("/jobs")}>
+            Back to Jobs
+          </button>
+        </div>
+      </MainLayout>
     );
   }
 
   return (
-    <div className="job-details-page">
+    <MainLayout>
+      <Topbar />
 
-      {/* Back Button */}
-      <button
-        className="back-btn"
-        onClick={() => navigate("/jobs")}
-      >
-        <FaArrowLeft />
-        Back to Jobs
-      </button>
+      <div className="job-details-page">
+        {/* Back Button */}
+        <button
+          className="back-btn"
+          onClick={() => navigate("/jobs")}
+        >
+          <FaArrowLeft />
+          Back to Jobs
+        </button>
 
-      {/* Job Header */}
-      <div className="job-details-card">
+        {/* Job Header */}
+        <div className="job-details-card">
+          <div className="job-details-header">
+            <div>
+              <h1>{job.title}</h1>
+              <h3>{job.company}</h3>
+            </div>
 
-        <div className="job-details-header">
-
-          <div>
-            <h1>{job.title}</h1>
-            <h3>{job.company}</h3>
+            <button
+              className="apply-btn"
+              onClick={() => alert(`Applied to ${job.company} for ${job.title} successfully!`)}
+            >
+              Apply Now
+            </button>
           </div>
 
-          <button
-            className="apply-btn"
-            onClick={() => alert("Application feature coming soon!")}
-          >
-            Apply Now
-          </button>
+          {/* Job Information */}
+          <div className="job-details-info">
+            <span>
+              <FaMapMarkerAlt />
+              {job.location}
+            </span>
 
-        </div>
+            <span>
+              <FaBriefcase />
+              {job.type}
+            </span>
 
-        {/* Job Information */}
-        <div className="job-details-info">
+            <span>
+              💰 {job.salary}
+            </span>
 
-          <span>
-            <FaMapMarkerAlt />
-            {job.location}
-          </span>
+            <span>
+              <FaClock />
+              {job.experience}
+            </span>
 
-          <span>
-            <FaBriefcase />
-            {job.type}
-          </span>
-
-          <span>
-            💰 {job.salary}
-          </span>
-
-          <span>
-            <FaClock />
-            {job.experience}
-          </span>
-
-          <span>
-            Posted {job.postedDate}
-          </span>
-
-        </div>
-
-        {/* Description */}
-        <section className="details-section">
-
-          <h2>Job Description</h2>
-
-          <p>{job.description}</p>
-
-        </section>
-
-        {/* Skills */}
-        <section className="details-section">
-
-          <h2>Required Skills</h2>
-
-          <div className="details-skills">
-
-            {job.skills.map((skill, index) => (
-              <span key={index}>
-                {skill}
-              </span>
-            ))}
-
+            <span>
+              Posted {job.postedDate}
+            </span>
           </div>
 
-        </section>
+          {/* Description */}
+          <section className="details-section">
+            <h2>Job Description</h2>
+            <p>{job.description}</p>
+          </section>
 
-        {/* Responsibilities */}
-        <section className="details-section">
+          {/* Skills */}
+          <section className="details-section">
+            <h2>Required Skills</h2>
+            <div className="details-skills">
+              {job.skills.map((skill, index) => (
+                <span key={index}>
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </section>
 
-          <h2>Responsibilities</h2>
+          {/* Responsibilities */}
+          <section className="details-section">
+            <h2>Responsibilities</h2>
+            <ul>
+              {job.responsibilities.map((item, index) => (
+                <li key={index}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </section>
 
-          <ul>
-            {job.responsibilities.map((item, index) => (
-              <li key={index}>
-                {item}
-              </li>
-            ))}
-          </ul>
-
-        </section>
-
-        {/* Requirements */}
-        <section className="details-section">
-
-          <h2>Requirements</h2>
-
-          <ul>
-            {job.requirements.map((item, index) => (
-              <li key={index}>
-                {item}
-              </li>
-            ))}
-          </ul>
-
-        </section>
-
+          {/* Requirements */}
+          <section className="details-section">
+            <h2>Requirements</h2>
+            <ul>
+              {job.requirements.map((item, index) => (
+                <li key={index}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }
 
