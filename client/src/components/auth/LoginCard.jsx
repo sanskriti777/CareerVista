@@ -6,9 +6,11 @@ import { useState } from "react";
 
 import { loginUser } from "../../services/authService";
 import { validateLogin } from "../../utils/validation";
+import { useAuth } from "../../context/AuthContext";
 
 function LoginCard() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -17,8 +19,11 @@ function LoginCard() {
   const [password, setPassword] = useState("");
 
   const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState("");
 
   const handleLogin = async () => {
+    setServerError("");
+
     const validationErrors = validateLogin(email, password);
 
     if (Object.keys(validationErrors).length > 0) {
@@ -30,8 +35,11 @@ function LoginCard() {
 
     const response = await loginUser(email, password);
 
-    if (response.success) {
+    if (response && response.success) {
+      login(response.user, response.token);
       navigate("/dashboard");
+    } else {
+      setServerError(response?.message || "Invalid email or password.");
     }
   };
 
@@ -62,6 +70,12 @@ function LoginCard() {
 
           <h1>Welcome Back</h1>
           <p className="login-subtitle">Sign in to continue your journey.</p>
+
+          {serverError && (
+            <p className="error-text" style={{ marginBottom: "12px", textAlign: "center" }}>
+              {serverError}
+            </p>
+          )}
 
           <div className="input-group">
             <FaEnvelope className="input-icon" />

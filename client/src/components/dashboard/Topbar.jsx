@@ -2,11 +2,19 @@ import "./Topbar.css";
 import { useState } from "react";
 import { FaBell, FaSearch, FaBars, FaSun, FaMoon } from "react-icons/fa";
 import { useTheme } from "../../context/ThemeContext";
+import { useAuth } from "../../context/AuthContext";
 import NotificationDropdown from "./NotificationDropdown";
 
 function Topbar({ onToggleSidebar }) {
   const { theme, toggleTheme } = useTheme();
+  const { user } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
+
+  const displayName = user?.name ? user.name.trim() : "User";
+  const avatarInitial = displayName.charAt(0).toUpperCase() || "U";
+  const roleDisplay = user?.role
+    ? user.role.charAt(0).toUpperCase() + user.role.slice(1)
+    : "Candidate";
 
   const todayDate = new Date().toLocaleDateString("en-US", {
     weekday: "short",
@@ -23,7 +31,7 @@ function Topbar({ onToggleSidebar }) {
           </button>
         )}
         <div>
-          <h2>Welcome back, Sanskriti 👋</h2>
+          <h2>Welcome back, {displayName} 👋</h2>
           <p>Explore today's top tech opportunities • <strong>{todayDate}</strong></p>
         </div>
       </div>
@@ -52,11 +60,11 @@ function Topbar({ onToggleSidebar }) {
         </div>
 
         <div className="profile">
-          <div className="avatar">S</div>
+          <div className="avatar">{avatarInitial}</div>
 
           <div>
-            <h4>Sanskriti</h4>
-            <span>Student</span>
+            <h4>{displayName}</h4>
+            <span>{roleDisplay}</span>
           </div>
         </div>
       </div>

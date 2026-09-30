@@ -9,6 +9,9 @@
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .job-card:hover {
@@ -29,6 +32,12 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.company-branding > div {
+  min-width: 0;
 }
 
 .company-logo-badge {
@@ -52,6 +61,8 @@
   color: #0f172a;
   font-weight: 700;
   line-height: 1.3;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .company {
@@ -59,6 +70,7 @@
   font-weight: 600;
   font-size: 13px;
   margin: 0;
+  word-break: break-word;
 }
 
 .job-metadata-pills {
@@ -128,4 +140,26 @@
 .heart-btn:hover {
   color: #ef4444;
   background: #fef2f2;
+}
+
+@media (max-width: 640px) {
+  .job-card {
+    padding: 18px;
+  }
+
+  .job-header h3 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .job-card {
+    padding: 16px;
+  }
+
+  .company-logo-badge {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
 }

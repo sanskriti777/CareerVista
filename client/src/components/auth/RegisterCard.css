@@ -230,3 +230,25 @@
     text-align: center;
   }
 }
+
+@media (max-width: 480px) {
+  .register-container {
+    padding: 16px 12px;
+  }
+
+  .register-card {
+    border-radius: 20px;
+  }
+
+  .register-form-panel {
+    padding: 28px 20px;
+  }
+
+  .register-form-panel h1 {
+    font-size: 24px;
+  }
+
+  .register-subtitle {
+    margin-bottom: 16px;
+  }
+}

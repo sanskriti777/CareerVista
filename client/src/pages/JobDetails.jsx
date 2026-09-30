@@ -1,22 +1,75 @@
 import "./JobDetails.css";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { jobs } from "../data/jobsData";
 import { FaArrowLeft, FaMapMarkerAlt, FaBriefcase, FaClock } from "react-icons/fa";
 import MainLayout from "../layouts/MainLayout";
 import Topbar from "../components/dashboard/Topbar";
+import ApplyModal from "../components/jobs/ApplyModal";
+import { getJobById } from "../services/jobService";
+import { jobs as fallbackJobs } from "../data/jobsData";
 
 function JobDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const job = jobs.find((job) => job.id === Number(id));
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showApplyModal, setShowApplyModal] = useState(false);
 
-  if (!job) {
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+    setError(null);
+
+    const fetchDetails = async () => {
+      const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+
+      if (isObjectId) {
+        const response = await getJobById(id);
+        if (!isMounted) return;
+
+        if (response.success && response.job) {
+          setJob(response.job);
+        } else {
+          setError(response.message || "Job Not Found");
+        }
+      } else {
+        // Fallback for legacy numeric IDs from mock dataset
+        const localJob = fallbackJobs.find((j) => j.id === Number(id));
+        if (localJob) {
+          setJob(localJob);
+        } else {
+          setError("Job Not Found");
+        }
+      }
+      setLoading(false);
+    };
+
+    fetchDetails();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id]);
+
+  if (loading) {
     return (
       <MainLayout>
         <Topbar />
         <div className="job-not-found">
-          <h2>Job Not Found</h2>
+          <h2>Loading job details...</h2>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (error || !job) {
+    return (
+      <MainLayout>
+        <Topbar />
+        <div className="job-not-found">
+          <h2>{error || "Job Not Found"}</h2>
           <button onClick={() => navigate("/jobs")}>
             Back to Jobs
           </button>
@@ -24,6 +77,10 @@ function JobDetails() {
       </MainLayout>
     );
   }
+
+  const formattedDate =
+    job.postedDate ||
+    (job.createdAt ? new Date(job.createdAt).toLocaleDateString() : "Recently");
 
   return (
     <MainLayout>
@@ -49,7 +106,7 @@ function JobDetails() {
 
             <button
               className="apply-btn"
-              onClick={() => alert(`Applied to ${job.company} for ${job.title} successfully!`)}
+              onClick={() => setShowApplyModal(true)}
             >
               Apply Now
             </button>
@@ -77,7 +134,7 @@ function JobDetails() {
             </span>
 
             <span>
-              Posted {job.postedDate}
+              Posted {formattedDate}
             </span>
           </div>
 
@@ -88,42 +145,55 @@ function JobDetails() {
           </section>
 
           {/* Skills */}
-          <section className="details-section">
-            <h2>Required Skills</h2>
-            <div className="details-skills">
-              {job.skills.map((skill, index) => (
-                <span key={index}>
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </section>
+          {job.skills && job.skills.length > 0 && (
+            <section className="details-section">
+              <h2>Required Skills</h2>
+              <div className="details-skills">
+                {job.skills.map((skill, index) => (
+                  <span key={index}>
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Responsibilities */}
-          <section className="details-section">
-            <h2>Responsibilities</h2>
-            <ul>
-              {job.responsibilities.map((item, index) => (
-                <li key={index}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
+          {job.responsibilities && job.responsibilities.length > 0 && (
+            <section className="details-section">
+              <h2>Responsibilities</h2>
+              <ul>
+                {job.responsibilities.map((item, index) => (
+                  <li key={index}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {/* Requirements */}
-          <section className="details-section">
-            <h2>Requirements</h2>
-            <ul>
-              {job.requirements.map((item, index) => (
-                <li key={index}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
+          {job.requirements && job.requirements.length > 0 && (
+            <section className="details-section">
+              <h2>Requirements</h2>
+              <ul>
+                {job.requirements.map((item, index) => (
+                  <li key={index}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
         </div>
       </div>
+
+      {showApplyModal && (
+        <ApplyModal
+          job={job}
+          onClose={() => setShowApplyModal(false)}
+        />
+      )}
     </MainLayout>
   );
 }

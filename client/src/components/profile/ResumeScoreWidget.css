@@ -83,3 +83,24 @@
   font-size: 13px;
   line-height: 1.6;
 }
+
+@media (max-width: 640px) {
+  .resume-score-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .resume-score-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .score-feedback {
+    padding: 14px 12px;
+  }
+
+  .score-feedback ul {
+    padding-left: 14px;
+  }
+}

@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 function SavedJobCard({ job, toggleSaveJob }) {
   const navigate = useNavigate();
 
+  const jobId = job._id || job.id;
+
   return (
     <div
       className="saved-job-card"
-      onClick={() => navigate(`/job/${job.id}`)}
+      onClick={() => navigate(`/job/${jobId}`)}
     >
       <div className="saved-job-header">
         <div>
@@ -21,7 +23,7 @@ function SavedJobCard({ job, toggleSaveJob }) {
             className="heart-btn saved"
             onClick={(e) => {
               e.stopPropagation();
-              toggleSaveJob(job.id);
+              toggleSaveJob(jobId);
             }}
             title="Remove from saved jobs"
           >
@@ -38,16 +40,17 @@ function SavedJobCard({ job, toggleSaveJob }) {
       <h4 className="salary">{job.salary}</h4>
 
       <div className="skills">
-        {job.skills.map((skill, index) => (
-          <span key={index}>{skill}</span>
-        ))}
+        {job.skills &&
+          job.skills.map((skill, index) => (
+            <span key={index}>{skill}</span>
+          ))}
       </div>
 
       <button
         className="apply-btn"
         onClick={(e) => {
           e.stopPropagation();
-          navigate(`/job/${job.id}`);
+          navigate(`/job/${jobId}`);
         }}
       >
         View Details & Apply

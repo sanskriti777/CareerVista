@@ -8,15 +8,18 @@ import App from "./App.jsx";
 import { SavedJobsProvider } from "./context/SavedJobsContext";
 import { ApplicationsProvider } from "./context/ApplicationsContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
-      <SavedJobsProvider>
-        <ApplicationsProvider>
-          <App />
-        </ApplicationsProvider>
-      </SavedJobsProvider>
+      <AuthProvider>
+        <SavedJobsProvider>
+          <ApplicationsProvider>
+            <App />
+          </ApplicationsProvider>
+        </SavedJobsProvider>
+      </AuthProvider>
     </ThemeProvider>
   </StrictMode>
 );

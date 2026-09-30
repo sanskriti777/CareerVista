@@ -23,6 +23,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .job-item:hover {
@@ -37,6 +40,7 @@
   font-size: 15px;
   color: #0f172a;
   font-weight: 600;
+  word-break: break-word;
 }
 
 .job-item-details p {
@@ -49,4 +53,22 @@
 .job-item-details span {
   color: #64748b;
   font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .job-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .recent-jobs {
+    padding: 16px;
+  }
+
+  .job-item {
+    padding: 12px;
+  }
 }

@@ -3,12 +3,21 @@
   grid-template-columns: 280px 1fr;
   gap: 30px;
   margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.filter-section {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .jobs-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 25px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 900px) {
@@ -19,8 +28,13 @@
 }
 
 @media (max-width: 640px) {
+  .jobs-container {
+    margin-top: 15px;
+    gap: 16px;
+  }
+
   .jobs-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 16px;
   }
 }

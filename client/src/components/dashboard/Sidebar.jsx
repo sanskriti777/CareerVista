@@ -1,26 +1,38 @@
 import "./Sidebar.css";
 import logo from "../../assets/logo.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaBriefcase,
   FaBookmark,
+  FaPaperPlane,
   FaChartBar,
   FaUser,
   FaSignOutAlt,
   FaTimes,
 } from "react-icons/fa";
+import { useAuth } from "../../context/AuthContext";
 
 function Sidebar({ isOpen, onClose }) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: <FaHome /> },
     { path: "/jobs", label: "Jobs", icon: <FaBriefcase /> },
     { path: "/saved-jobs", label: "Saved Jobs", icon: <FaBookmark /> },
+    { path: "/applications", label: "Applications", icon: <FaPaperPlane /> },
     { path: "/analytics", label: "Analytics", icon: <FaChartBar /> },
     { path: "/profile", label: "Profile", icon: <FaUser /> },
   ];
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    if (onClose) onClose();
+    logout();
+    navigate("/login");
+  };
 
   return (
     <>
@@ -54,10 +66,14 @@ function Sidebar({ isOpen, onClose }) {
           ))}
         </nav>
 
-        <Link to="/login" className="logout-btn" onClick={onClose}>
+        <button
+          type="button"
+          className="logout-btn"
+          onClick={handleLogout}
+        >
           <FaSignOutAlt />
           Logout
-        </Link>
+        </button>
       </aside>
     </>
   );

@@ -1,11 +1,12 @@
 import "./StatsCard.css";
 
-function StatsCard({ title, value, color }) {
-  const trends = {
-    "Total Jobs": "↑ 18 new today",
+function StatsCard({ title, value, color, trend }) {
+  const defaultTrends = {
+    "Available Jobs": "Active openings",
     "Saved Jobs": "Active bookmarks",
-    "Applications": "↑ 12% this month",
-    "Skills Matched": "Top 5% candidate",
+    "Applications": "Tracked applications",
+    "Career Match": "Based on profile",
+    "Top Job Match": "Top compatible role",
   };
 
   return (
@@ -16,7 +17,7 @@ function StatsCard({ title, value, color }) {
       </div>
 
       <div className="stats-trend">
-        <span>{trends[title] || "Updated live"}</span>
+        <span>{trend || defaultTrends[title] || "Updated live"}</span>
       </div>
     </div>
   );

@@ -5,14 +5,15 @@ import { useNavigate } from "react-router-dom";
 function JobCard({ job, savedJobs, toggleSaveJob, onOpenApplyModal }) {
   const navigate = useNavigate();
 
-  const isSaved = savedJobs.includes(job.id);
+  const jobId = job._id || job.id;
+  const isSaved = Array.isArray(savedJobs) && (savedJobs.includes(jobId) || (job.id && savedJobs.includes(job.id)));
 
   const companyLetter = job.company ? job.company.charAt(0) : "C";
 
   return (
     <div
       className="job-card"
-      onClick={() => navigate(`/job/${job.id}`)}
+      onClick={() => navigate(`/job/${jobId}`)}
     >
       <div className="job-header">
         <div className="company-branding">
@@ -27,7 +28,7 @@ function JobCard({ job, savedJobs, toggleSaveJob, onOpenApplyModal }) {
           className="heart-btn"
           onClick={(e) => {
             e.stopPropagation();
-            toggleSaveJob(job.id);
+            toggleSaveJob(jobId);
           }}
           title={isSaved ? "Remove from saved" : "Save job"}
         >
@@ -42,9 +43,10 @@ function JobCard({ job, savedJobs, toggleSaveJob, onOpenApplyModal }) {
       </div>
 
       <div className="skills">
-        {job.skills.map((skill, index) => (
-          <span key={index}>{skill}</span>
-        ))}
+        {job.skills &&
+          job.skills.map((skill, index) => (
+            <span key={index}>{skill}</span>
+          ))}
       </div>
 
       <button
@@ -54,7 +56,7 @@ function JobCard({ job, savedJobs, toggleSaveJob, onOpenApplyModal }) {
           if (onOpenApplyModal) {
             onOpenApplyModal(job);
           } else {
-            navigate(`/job/${job.id}`);
+            navigate(`/job/${jobId}`);
           }
         }}
       >

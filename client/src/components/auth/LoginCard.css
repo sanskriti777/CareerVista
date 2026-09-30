@@ -282,3 +282,27 @@
     text-align: left;
   }
 }
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 16px 12px;
+  }
+
+  .login-card {
+    border-radius: 20px;
+  }
+
+  .login-form-panel {
+    padding: 28px 20px;
+  }
+
+  .login-form-panel h1 {
+    font-size: 24px;
+  }
+
+  .login-options {
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,381 @@
+.recommended-section-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+.recommended-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.recommended-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.recommended-title-row h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.live-matching-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #f5f3ff;
+  color: #6d28d9;
+  border: 1px solid #ddd6fe;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.recommended-subtitle {
+  color: #64748b;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.browse-all-link {
+  display: inline-flex;
+  align-items: center;
+  color: #6d28d9;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.browse-all-link:hover {
+  color: #4f46e5;
+  text-decoration: underline;
+}
+
+/* Incomplete profile prompt banner */
+.profile-prompt-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #faf5ff 0%, #f5f3ff 100%);
+  border: 1px solid #e9d5ff;
+  border-radius: 14px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.prompt-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.prompt-icon {
+  font-size: 24px;
+  color: #7c3aed;
+  flex-shrink: 0;
+}
+
+.profile-prompt-banner h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #581c87;
+  margin: 0 0 2px;
+}
+
+.profile-prompt-banner p {
+  font-size: 12px;
+  color: #6b21a8;
+  margin: 0;
+}
+
+.btn-update-profile {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #7c3aed;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.btn-update-profile:hover {
+  background: #6d28d9;
+}
+
+/* Recommended Jobs Grid */
+.recommended-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.recommended-job-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.recommended-job-card:hover {
+  border-color: #c4b5fd;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(109, 40, 217, 0.1);
+}
+
+.rec-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.rec-company-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rec-logo-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ede9fe 0%, #e0e7ff 100%);
+  color: #6d28d9;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rec-job-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px;
+}
+
+.rec-company-name {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Match Score Badge */
+.match-score-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  text-align: center;
+  min-width: 60px;
+}
+
+.match-score-number {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.match-score-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Metadata Row */
+.rec-metadata-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: #475569;
+  margin-bottom: 14px;
+}
+
+.rec-metadata-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rec-salary {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Skills section */
+.rec-skills-section {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.skills-sublabel {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.rec-skills-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.pill-matched {
+  font-size: 11px;
+  font-weight: 600;
+  background: #dcfce7;
+  color: #15803d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.no-matched-text {
+  font-size: 12px;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.missing-skills-note {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Card Footer */
+.rec-card-footer {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.btn-view-match {
+  flex: 1;
+  padding: 8px 12px;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-view-match:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.btn-apply-match {
+  flex: 1;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-apply-match:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* Loading & Empty States */
+.recommendations-loading,
+.no-recommendations-state {
+  text-align: center;
+  padding: 32px 16px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.rec-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #6d28d9;
+  border-radius: 50%;
+  animation: rec-spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes rec-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.explore-jobs-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #6d28d9;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.explore-jobs-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .recommended-section-card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .recommended-jobs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-prompt-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-update-profile {
+    justify-content: center;
+  }
+}

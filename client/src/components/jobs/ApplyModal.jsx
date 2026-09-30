@@ -1,26 +1,58 @@
 import "./ApplyModal.css";
-import { useState } from "react";
-import { FaTimes, FaFileUpload, FaCheckCircle } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { FaTimes, FaFileUpload } from "react-icons/fa";
 import { useApplications } from "../../context/ApplicationsContext";
+import { useAuth } from "../../context/AuthContext";
 
 function ApplyModal({ job, onClose }) {
   const { applyToJob } = useApplications();
+  const { user } = useAuth();
 
   const [formData, setFormData] = useState({
-    fullName: "Sanskriti",
-    email: "sanskriti@example.com",
+    fullName: user?.name || "",
+    email: user?.email || "",
     notes: "",
     resumeName: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Populate user info if user loaded asynchronously
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        fullName: prev.fullName || user.name || "",
+        email: prev.email || user.email || "",
+      }));
+    }
+  }, [user]);
 
   if (!job) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    applyToJob(job, formData);
-    setSubmitted(true);
+    setErrorMessage("");
+    setSubmitting(true);
+
+    try {
+      const result = await applyToJob(job, formData);
+
+      if (result && result.success) {
+        setSubmitted(true);
+      } else {
+        setErrorMessage(
+          result?.message || "Unable to submit application. Please try again."
+        );
+      }
+    } catch (err) {
+      console.error("Error submitting application:", err);
+      setErrorMessage("An unexpected error occurred. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleFileChange = (e) => {
@@ -40,7 +72,7 @@ function ApplyModal({ job, onClose }) {
             <h2>Apply for Role</h2>
             <p>{job.title} at {job.company}</p>
           </div>
-          <button className="close-modal-btn" onClick={onClose}>
+          <button className="close-modal-btn" onClick={onClose} disabled={submitting}>
             <FaTimes />
           </button>
         </div>
@@ -58,6 +90,23 @@ function ApplyModal({ job, onClose }) {
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
+            {errorMessage && (
+              <div
+                style={{
+                  background: "#fef2f2",
+                  color: "#b91c1c",
+                  border: "1px solid #fecaca",
+                  borderRadius: "10px",
+                  padding: "10px 14px",
+                  fontSize: "13px",
+                  marginBottom: "16px",
+                  fontWeight: "500",
+                }}
+              >
+                {errorMessage}
+              </div>
+            )}
+
             <div className="modal-form-group">
               <label>Full Name</label>
               <input
@@ -65,6 +114,7 @@ function ApplyModal({ job, onClose }) {
                 required
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                disabled={submitting}
               />
             </div>
 
@@ -75,12 +125,16 @@ function ApplyModal({ job, onClose }) {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                disabled={submitting}
               />
             </div>
 
             <div className="modal-form-group">
               <label>Resume / CV</label>
-              <label className="file-upload-box">
+              <label
+                className="file-upload-box"
+                style={submitting ? { pointerEvents: "none", opacity: 0.7 } : {}}
+              >
                 <FaFileUpload />
                 <div style={{ fontSize: "13px", color: "#475569", fontWeight: "600" }}>
                   {formData.resumeName ? `Attached: ${formData.resumeName}` : "Click to attach PDF / Word Resume"}
@@ -90,6 +144,7 @@ function ApplyModal({ job, onClose }) {
                   accept=".pdf,.doc,.docx"
                   style={{ display: "none" }}
                   onChange={handleFileChange}
+                  disabled={submitting}
                 />
               </label>
             </div>
@@ -101,11 +156,17 @@ function ApplyModal({ job, onClose }) {
                 placeholder="Briefly describe why you are a great fit..."
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                disabled={submitting}
               ></textarea>
             </div>
 
-            <button type="submit" className="submit-application-btn">
-              Submit Application 🚀
+            <button
+              type="submit"
+              className="submit-application-btn"
+              disabled={submitting}
+              style={submitting ? { opacity: 0.7, cursor: "not-allowed" } : {}}
+            >
+              {submitting ? "Submitting..." : "Submit Application 🚀"}
             </button>
           </form>
         )}

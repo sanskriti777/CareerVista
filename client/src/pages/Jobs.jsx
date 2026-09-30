@@ -1,5 +1,5 @@
 import "./Jobs.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import MainLayout from "../layouts/MainLayout";
 import Topbar from "../components/dashboard/Topbar";
@@ -8,10 +8,14 @@ import FilterPanel from "../components/jobs/FilterPanel";
 import JobCard from "../components/jobs/JobCard";
 import ApplyModal from "../components/jobs/ApplyModal";
 
-import { jobs } from "../data/jobsData";
+import { getJobs } from "../services/jobService";
 import { useSavedJobs } from "../context/SavedJobsContext";
 
 function Jobs() {
+  const [jobsList, setJobsList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
   const [jobType, setJobType] = useState("");
@@ -19,7 +23,13 @@ function Jobs() {
   const [sortBy, setSortBy] = useState("latest");
   const [selectedApplyJob, setSelectedApplyJob] = useState(null);
 
-  const { savedJobs, toggleSaveJob } = useSavedJobs();
+  const { savedJobs, toggleSaveJob, refreshSavedJobs } = useSavedJobs();
+
+  useEffect(() => {
+    if (refreshSavedJobs) {
+      refreshSavedJobs();
+    }
+  }, [refreshSavedJobs]);
 
   const handleResetFilters = () => {
     setSearch("");
@@ -29,33 +39,36 @@ function Jobs() {
     setSortBy("latest");
   };
 
-  // Search + Filter Logic
-  const filteredJobs = jobs.filter((job) => {
-    const keyword = search.toLowerCase();
+  // Fetch jobs from backend API with debounced search & filter criteria
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+    setError(null);
 
-    const matchesSearch =
-      job.title.toLowerCase().includes(keyword) ||
-      job.company.toLowerCase().includes(keyword) ||
-      job.location.toLowerCase().includes(keyword) ||
-      job.skills.some((skill) =>
-        skill.toLowerCase().includes(keyword)
-      );
+    const timer = setTimeout(async () => {
+      const response = await getJobs({
+        search,
+        location,
+        type: jobType,
+        experience,
+        sort: sortBy,
+      });
 
-    const matchesLocation = location === "" || job.location === location;
-    const matchesJobType = jobType === "" || job.type === jobType;
-    const matchesExp = experience === "" || job.experience === experience;
+      if (!isMounted) return;
 
-    return matchesSearch && matchesLocation && matchesJobType && matchesExp;
-  }).sort((a, b) => {
-    if (sortBy === "salary-high") {
-      const getSalaryVal = (s) => Number(s.replace(/[^0-9]/g, "")) || 0;
-      return getSalaryVal(b.salary) - getSalaryVal(a.salary);
-    }
-    if (sortBy === "company-az") {
-      return a.company.localeCompare(b.company);
-    }
-    return a.id - b.id;
-  });
+      if (response.success) {
+        setJobsList(response.jobs || []);
+      } else {
+        setError(response.message || "Unable to load jobs. Please try again.");
+      }
+      setLoading(false);
+    }, 300);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+    };
+  }, [search, location, jobType, experience, sortBy]);
 
   return (
     <MainLayout>
@@ -82,10 +95,18 @@ function Jobs() {
         </div>
 
         <div className="jobs-grid">
-          {filteredJobs.length > 0 ? (
-            filteredJobs.map((job) => (
+          {loading ? (
+            <div className="jobs-status-message">
+              <h2>Loading jobs...</h2>
+            </div>
+          ) : error ? (
+            <div className="jobs-status-message">
+              <h2>{error}</h2>
+            </div>
+          ) : jobsList.length > 0 ? (
+            jobsList.map((job) => (
               <JobCard
-                key={job.id}
+                key={job._id || job.id}
                 job={job}
                 savedJobs={savedJobs}
                 toggleSaveJob={toggleSaveJob}
@@ -93,7 +114,9 @@ function Jobs() {
               />
             ))
           ) : (
-            <h2>No jobs found matching your criteria.</h2>
+            <div className="jobs-status-message">
+              <h2>No jobs found matching your criteria.</h2>
+            </div>
           )}
         </div>
       </div>
