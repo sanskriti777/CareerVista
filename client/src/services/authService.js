@@ -1,6 +1,8 @@
+import API_BASE_URL from "../config/api";
+
 export const loginUser = async (email, password) => {
   try {
-    const response = await fetch("http://localhost:5000/api/auth/login", {
+    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,8 +51,13 @@ export const updateProfile = async (profileData) => {
     if (profileData.preferredRole !== undefined) allowedPayload.preferredRole = profileData.preferredRole;
     if (profileData.skills !== undefined) allowedPayload.skills = profileData.skills;
     if (profileData.resumeUrl !== undefined) allowedPayload.resumeUrl = profileData.resumeUrl;
+    if (profileData.bio !== undefined) allowedPayload.bio = profileData.bio;
+    if (profileData.isFresher !== undefined) allowedPayload.isFresher = profileData.isFresher;
+    if (profileData.education !== undefined) allowedPayload.education = profileData.education;
+    if (profileData.experience !== undefined) allowedPayload.experience = profileData.experience;
+    if (profileData.projects !== undefined) allowedPayload.projects = profileData.projects;
 
-    const response = await fetch("http://localhost:5000/api/auth/me", {
+    const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -67,6 +74,70 @@ export const updateProfile = async (profileData) => {
     return {
       success: false,
       message: error.message || "Unable to connect to server",
+    };
+  }
+};
+
+export const uploadProfilePicture = async (file) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return {
+        success: false,
+        message: "No authentication token found. Please log in again.",
+      };
+    }
+
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+
+    const response = await fetch(`${API_BASE_URL}/api/auth/profile-picture`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Profile picture upload error:", error);
+
+    return {
+      success: false,
+      message: error.message || "Unable to upload profile picture",
+    };
+  }
+};
+
+export const deleteProfilePicture = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return {
+        success: false,
+        message: "No authentication token found. Please log in again.",
+      };
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/auth/profile-picture`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Profile picture delete error:", error);
+
+    return {
+      success: false,
+      message: error.message || "Unable to remove profile picture",
     };
   }
 };
