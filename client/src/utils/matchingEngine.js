@@ -61,6 +61,30 @@ export const tokenizeText = (text) => {
 };
 
 /**
+ * Checks whether candidate profile has entered minimum required criteria (skills and preferredRole)
+ * to activate personalized matching.
+ * @param {Object} user
+ * @returns {boolean}
+ */
+export const isProfileMatchReady = (user) => {
+  if (!user || typeof user !== "object") return false;
+
+  const hasSkills =
+    Array.isArray(user.skills) &&
+    user.skills.some(
+      (skill) => typeof skill === "string" && skill.trim().length > 0
+    );
+
+  const hasPreferredRole = Boolean(
+    user.preferredRole &&
+      typeof user.preferredRole === "string" &&
+      user.preferredRole.trim().length > 0
+  );
+
+  return hasSkills && hasPreferredRole;
+};
+
+/**
  * Calculates a match score between a candidate profile and a job listing
  * @param {Object} user - The candidate profile from AuthContext
  * @param {Object} job - The job document from MongoDB
@@ -71,12 +95,32 @@ export const getJobMatchScore = (user, job) => {
     return {
       score: 0,
       label: "Low Match",
+      isMatchReady: false,
       skillsScore: 0,
+      skillScore: 0,
       roleScore: 0,
       locationScore: 0,
       matchedSkills: [],
       missingSkills: [],
       totalJobSkills: 0,
+      roleMatch: false,
+      locationMatch: false,
+    };
+  }
+
+  // If user profile is not match-ready, return safe non-personalized result with zero location score
+  if (!isProfileMatchReady(user)) {
+    return {
+      score: 0,
+      label: "Profile Incomplete",
+      isMatchReady: false,
+      skillsScore: 0,
+      skillScore: 0,
+      roleScore: 0,
+      locationScore: 0,
+      matchedSkills: [],
+      missingSkills: [],
+      totalJobSkills: Array.isArray(job.skills) ? job.skills.length : 0,
       roleMatch: false,
       locationMatch: false,
     };
@@ -218,7 +262,9 @@ export const getJobMatchScore = (user, job) => {
   return {
     score: totalScore,
     label,
+    isMatchReady: true,
     skillsScore,
+    skillScore: skillsScore,
     roleScore,
     locationScore,
     matchedSkills,
@@ -259,13 +305,10 @@ export const getRecommendedJobs = (user, jobs = [], limit = 5) => {
 
 /**
  * Checks whether user has entered sufficient profile criteria for meaningful matching
+ * Uses the exact same readiness rule as isProfileMatchReady
  * @param {Object} user
  * @returns {boolean}
  */
 export const hasSufficientProfileData = (user) => {
-  if (!user) return false;
-  const hasSkills = Array.isArray(user.skills) && user.skills.length > 0;
-  const hasRole = Boolean(user.preferredRole && user.preferredRole.trim());
-  const hasLocation = Boolean(user.location && user.location.trim());
-  return hasSkills || hasRole || hasLocation;
+  return isProfileMatchReady(user);
 };

@@ -21,7 +21,10 @@ function LoginCard() {
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    if (e && typeof e.preventDefault === "function") {
+      e.preventDefault();
+    }
     setServerError("");
 
     const validationErrors = validateLogin(email, password);
@@ -77,48 +80,56 @@ function LoginCard() {
             </p>
           )}
 
-          <div className="input-group">
-            <FaEnvelope className="input-icon" />
-            <input
-              type="email"
-              placeholder="Email Address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <form onSubmit={handleLogin} autoComplete="off">
+            <div className="input-group">
+              <FaEnvelope className="input-icon" />
+              <input
+                id="login-email"
+                name="email"
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="username"
+              />
+            </div>
 
-          {errors.email && <p className="error-text">{errors.email}</p>}
+            {errors.email && <p className="error-text">{errors.email}</p>}
 
-          <div className="input-group">
-            <FaLock className="input-icon" />
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <span
-              className="eye-icon"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
+            <div className="input-group">
+              <FaLock className="input-icon" />
+              <input
+                id="login-password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+              />
+              <span
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
 
-          {errors.password && <p className="error-text">{errors.password}</p>}
+            {errors.password && <p className="error-text">{errors.password}</p>}
 
-          <div className="login-options">
-            <label>
-              <input type="checkbox" />
-              Remember Me
-            </label>
+            <div className="login-options">
+              <label>
+                <input type="checkbox" />
+                Remember Me
+              </label>
 
-            <Link to="#">Forgot Password?</Link>
-          </div>
+              <Link to="#">Forgot Password?</Link>
+            </div>
 
-          <button className="login-btn" onClick={handleLogin}>
-            Sign In
-          </button>
+            <button type="submit" className="login-btn">
+              Sign In
+            </button>
+          </form>
 
           <p className="register-link">
             Don't have an account?

@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:5000/api/saved-jobs";
+import API_BASE_URL from "../config/api";
+
+const SAVED_JOBS_API_URL = `${API_BASE_URL}/api/saved-jobs`;
 
 /**
  * Helper to get the auth header using the stored JWT token
@@ -27,7 +29,7 @@ export const getSavedJobs = async () => {
       };
     }
 
-    const response = await fetch(API_BASE_URL, {
+    const response = await fetch(SAVED_JOBS_API_URL, {
       method: "GET",
       headers: getAuthHeaders(),
     });
@@ -61,7 +63,7 @@ export const saveJob = async (jobId) => {
       };
     }
 
-    const response = await fetch(`${API_BASE_URL}/${jobId}`, {
+    const response = await fetch(`${SAVED_JOBS_API_URL}/${jobId}`, {
       method: "POST",
       headers: getAuthHeaders(),
     });
@@ -97,7 +99,7 @@ export const unsaveJob = async (jobId) => {
       };
     }
 
-    const response = await fetch(`${API_BASE_URL}/${jobId}`, {
+    const response = await fetch(`${SAVED_JOBS_API_URL}/${jobId}`, {
       method: "DELETE",
       headers: getAuthHeaders(),
     });

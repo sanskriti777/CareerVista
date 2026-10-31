@@ -13,7 +13,7 @@ import { useAuth } from "../context/AuthContext";
 import { getJobs } from "../services/jobService";
 import {
   getRecommendedJobs,
-  hasSufficientProfileData,
+  isProfileMatchReady,
 } from "../utils/matchingEngine";
 
 function Dashboard() {
@@ -58,11 +58,14 @@ function Dashboard() {
     };
   }, []);
 
-  // Compute real deterministic job matches from live MongoDB jobs and user profile
-  const hasProfile = hasSufficientProfileData(user);
+  // Determine if candidate profile is match-ready (skills + preferredRole)
+  const matchReady = isProfileMatchReady(user);
+
+  // Performance rule: only run recommendation engine when candidate profile is match-ready
   const recommendations = useMemo(() => {
+    if (!matchReady) return [];
     return getRecommendedJobs(user, jobs, 4);
-  }, [user, jobs]);
+  }, [matchReady, user, jobs]);
 
   const topMatch = recommendations[0]?.match;
 
@@ -89,14 +92,14 @@ function Dashboard() {
       title: "Career Match",
       value: jobsLoading
         ? "..."
-        : hasProfile && topMatch
+        : matchReady && topMatch
         ? `${topMatch.score}%`
-        : "Profile setup",
+        : "Profile Setup",
       color: "#7C3AED",
       trend:
-        hasProfile && topMatch
+        matchReady && topMatch
           ? `${topMatch.label} (Top)`
-          : "Add skills to match",
+          : "Add skills & role",
     },
   ];
 
@@ -116,11 +119,13 @@ function Dashboard() {
         ))}
       </div>
 
-      {/* Recommended Jobs Section */}
+      {/* Recommended or Discovery Jobs Section */}
       <RecommendedJobsSection
+        jobs={jobs}
         recommendations={recommendations}
         loading={jobsLoading}
-        hasProfile={hasProfile}
+        matchReady={matchReady}
+        user={user}
         onOpenApplyModal={(job) => setSelectedApplyJob(job)}
       />
 

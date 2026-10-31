@@ -84,9 +84,125 @@
   line-height: 1.6;
 }
 
+/* Incomplete Profile Setup State */
+.profile-setup-box {
+  display: flex;
+  gap: 16px;
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 16px;
+  padding: 22px;
+  align-items: flex-start;
+}
+
+.setup-banner-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(109, 40, 217, 0.2);
+}
+
+.setup-content {
+  flex: 1;
+}
+
+.setup-status-title {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e1b4b;
+  line-height: 1.4;
+}
+
+.setup-status-desc {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.setup-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.checklist-item.completed {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.check-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.check-icon.completed {
+  color: #16a34a;
+}
+
+.check-icon.pending {
+  color: #94a3b8;
+}
+
+.btn-complete-profile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-complete-profile:hover {
+  background: linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(109, 40, 217, 0.35);
+}
+
+.btn-complete-profile:active {
+  transform: translateY(0);
+}
+
 @media (max-width: 640px) {
   .resume-score-card {
     padding: 20px;
+  }
+
+  .profile-setup-box {
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
   }
 }
 
@@ -102,5 +218,9 @@
 
   .score-feedback ul {
     padding-left: 14px;
+  }
+
+  .btn-complete-profile {
+    width: 100%;
   }
 }

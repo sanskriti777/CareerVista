@@ -158,47 +158,6 @@
   border-color: #c4b5fd;
 }
 
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 4px 8px;
-  border-radius: 14px;
-  transition: background 0.2s ease;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.profile:hover {
-  background: #f1f5f9;
-}
-
-.avatar {
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  font-weight: 700;
-  font-size: 17px;
-  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
-  flex-shrink: 0;
-}
-
-.profile h4 {
-  margin: 0;
-  font-size: 14px;
-  color: #0f172a;
-  font-weight: 600;
-}
-
-.profile span {
-  color: #64748b;
-  font-size: 12px;
-}
 
 @media (max-width: 1024px) {
   .topbar-right {

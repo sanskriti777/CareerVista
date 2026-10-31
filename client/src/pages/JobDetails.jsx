@@ -6,7 +6,6 @@ import MainLayout from "../layouts/MainLayout";
 import Topbar from "../components/dashboard/Topbar";
 import ApplyModal from "../components/jobs/ApplyModal";
 import { getJobById } from "../services/jobService";
-import { jobs as fallbackJobs } from "../data/jobsData";
 
 function JobDetails() {
   const { id } = useParams();
@@ -23,25 +22,19 @@ function JobDetails() {
     setError(null);
 
     const fetchDetails = async () => {
-      const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+      if (!id) {
+        setError("Job Not Found");
+        setLoading(false);
+        return;
+      }
 
-      if (isObjectId) {
-        const response = await getJobById(id);
-        if (!isMounted) return;
+      const response = await getJobById(id);
+      if (!isMounted) return;
 
-        if (response.success && response.job) {
-          setJob(response.job);
-        } else {
-          setError(response.message || "Job Not Found");
-        }
+      if (response && response.success && response.job) {
+        setJob(response.job);
       } else {
-        // Fallback for legacy numeric IDs from mock dataset
-        const localJob = fallbackJobs.find((j) => j.id === Number(id));
-        if (localJob) {
-          setJob(localJob);
-        } else {
-          setError("Job Not Found");
-        }
+        setError(response?.message || "Job Not Found");
       }
       setLoading(false);
     };

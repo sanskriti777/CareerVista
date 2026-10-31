@@ -32,7 +32,10 @@ function RegisterCard() {
     });
   };
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    if (e && typeof e.preventDefault === "function") {
+      e.preventDefault();
+    }
     setServerError("");
     setSuccessMessage("");
 
@@ -55,7 +58,18 @@ function RegisterCard() {
           navigate("/login");
         }, 1500);
       } else {
-        setServerError(response?.message || "Registration failed. Please try again.");
+        const errorMsg = response?.message || "Registration failed. Please try again.";
+        setServerError(errorMsg);
+
+        // If duplicate email (409), preserve name and email while clearing password fields
+        if (errorMsg === "User already exists with this email") {
+          setFormData((prev) => ({
+            ...prev,
+            password: "",
+            confirmPassword: "",
+          }));
+        }
+
         setIsSubmitting(false);
       }
     } catch {
@@ -108,86 +122,94 @@ function RegisterCard() {
             </p>
           )}
 
-          {/* Name Field */}
-          <div className="input-group">
-            <FaUser className="input-icon" />
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-          </div>
-          {errors.name && <p className="error-text">{errors.name}</p>}
+          <form onSubmit={handleRegister} autoComplete="off">
+            {/* Name Field */}
+            <div className="input-group">
+              <FaUser className="input-icon" />
+              <input
+                id="register-name"
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={handleChange}
+                autoComplete="name"
+              />
+            </div>
+            {errors.name && <p className="error-text">{errors.name}</p>}
 
-          {/* Email Field */}
-          <div className="input-group">
-            <FaEnvelope className="input-icon" />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-          {errors.email && <p className="error-text">{errors.email}</p>}
+            {/* Email Field */}
+            <div className="input-group">
+              <FaEnvelope className="input-icon" />
+              <input
+                id="register-email"
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                autoComplete="email"
+              />
+            </div>
+            {errors.email && <p className="error-text">{errors.email}</p>}
 
-          {/* Password Field */}
-          <div className="input-group">
-            <FaLock className="input-icon" />
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              autoComplete="new-password"
-            />
-            <span
-              className="eye-icon"
-              onClick={() => setShowPassword(!showPassword)}
-              title={showPassword ? "Hide password" : "Show password"}
-              aria-label={showPassword ? "Hide password" : "Show password"}
+            {/* Password Field */}
+            <div className="input-group">
+              <FaLock className="input-icon" />
+              <input
+                id="register-password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                autoComplete="new-password"
+              />
+              <span
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+                title={showPassword ? "Hide password" : "Show password"}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+            {errors.password && <p className="error-text">{errors.password}</p>}
+
+            {/* Confirm Password Field with Independent Toggle */}
+            <div className="input-group">
+              <FaLock className="input-icon" />
+              <input
+                id="register-confirm-password"
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                autoComplete="new-password"
+              />
+              <span
+                className="eye-icon"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                title={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+                aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+            {errors.confirmPassword && (
+              <p className="error-text">{errors.confirmPassword}</p>
+            )}
+
+            <button
+              type="submit"
+              className="register-btn"
+              disabled={isSubmitting}
+              style={isSubmitting ? { opacity: 0.75, cursor: "not-allowed" } : {}}
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
-          {errors.password && <p className="error-text">{errors.password}</p>}
-
-          {/* Confirm Password Field with Independent Toggle */}
-          <div className="input-group">
-            <FaLock className="input-icon" />
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              autoComplete="new-password"
-            />
-            <span
-              className="eye-icon"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              title={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
-              aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
-            >
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
-          {errors.confirmPassword && (
-            <p className="error-text">{errors.confirmPassword}</p>
-          )}
-
-          <button
-            className="register-btn"
-            onClick={handleRegister}
-            disabled={isSubmitting}
-            style={isSubmitting ? { opacity: 0.75, cursor: "not-allowed" } : {}}
-          >
-            {isSubmitting ? "Creating Account..." : "Create Account"}
-          </button>
+              {isSubmitting ? "Creating Account..." : "Create Account"}
+            </button>
+          </form>
 
           <p className="login-link">
             Already have an account?

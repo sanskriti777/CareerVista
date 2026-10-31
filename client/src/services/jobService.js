@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:5000/api/jobs";
+import API_BASE_URL from "../config/api";
+
+const JOBS_API_URL = `${API_BASE_URL}/api/jobs`;
 
 /**
  * Fetch all active jobs with optional search, filters, and sorting
@@ -26,7 +28,7 @@ export const getJobs = async (params = {}) => {
     }
 
     const queryString = queryParams.toString();
-    const url = queryString ? `${API_BASE_URL}?${queryString}` : API_BASE_URL;
+    const url = queryString ? `${JOBS_API_URL}?${queryString}` : JOBS_API_URL;
 
     const response = await fetch(url, {
       method: "GET",
@@ -55,7 +57,7 @@ export const getJobs = async (params = {}) => {
  */
 export const getJobById = async (jobId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/${jobId}`, {
+    const response = await fetch(`${JOBS_API_URL}/${jobId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

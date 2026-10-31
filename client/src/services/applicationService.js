@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:5000/api/applications";
+import API_BASE_URL from "../config/api";
+
+const APPLICATIONS_API_URL = `${API_BASE_URL}/api/applications`;
 
 /**
  * Helper to retrieve authorization headers with the stored JWT token
@@ -28,7 +30,7 @@ export const getApplications = async () => {
       };
     }
 
-    const response = await fetch(API_BASE_URL, {
+    const response = await fetch(APPLICATIONS_API_URL, {
       method: "GET",
       headers: getAuthHeaders(),
     });
@@ -75,7 +77,7 @@ export const applyToJob = async (jobId, applicationData = {}) => {
       notes: applicationData.notes ? String(applicationData.notes).trim() : "",
     };
 
-    const response = await fetch(`${API_BASE_URL}/${jobId}`, {
+    const response = await fetch(`${APPLICATIONS_API_URL}/${jobId}`, {
       method: "POST",
       headers: getAuthHeaders(),
       body: JSON.stringify(sanitizedPayload),
@@ -112,7 +114,7 @@ export const getApplicationById = async (applicationId) => {
       };
     }
 
-    const response = await fetch(`${API_BASE_URL}/${applicationId}`, {
+    const response = await fetch(`${APPLICATIONS_API_URL}/${applicationId}`, {
       method: "GET",
       headers: getAuthHeaders(),
     });
@@ -149,7 +151,7 @@ export const updateApplicationStatus = async (applicationId, status) => {
       };
     }
 
-    const response = await fetch(`${API_BASE_URL}/${applicationId}`, {
+    const response = await fetch(`${APPLICATIONS_API_URL}/${applicationId}`, {
       method: "PUT",
       headers: getAuthHeaders(),
       body: JSON.stringify({ status }),
@@ -186,7 +188,7 @@ export const withdrawApplication = async (applicationId) => {
       };
     }
 
-    const response = await fetch(`${API_BASE_URL}/${applicationId}`, {
+    const response = await fetch(`${APPLICATIONS_API_URL}/${applicationId}`, {
       method: "DELETE",
       headers: getAuthHeaders(),
     });

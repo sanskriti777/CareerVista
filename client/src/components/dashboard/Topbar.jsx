@@ -11,10 +11,6 @@ function Topbar({ onToggleSidebar }) {
   const [showNotifications, setShowNotifications] = useState(false);
 
   const displayName = user?.name ? user.name.trim() : "User";
-  const avatarInitial = displayName.charAt(0).toUpperCase() || "U";
-  const roleDisplay = user?.role
-    ? user.role.charAt(0).toUpperCase() + user.role.slice(1)
-    : "Candidate";
 
   const todayDate = new Date().toLocaleDateString("en-US", {
     weekday: "short",
@@ -57,15 +53,6 @@ function Topbar({ onToggleSidebar }) {
           </button>
 
           {showNotifications && <NotificationDropdown />}
-        </div>
-
-        <div className="profile">
-          <div className="avatar">{avatarInitial}</div>
-
-          <div>
-            <h4>{displayName}</h4>
-            <span>{roleDisplay}</span>
-          </div>
         </div>
       </div>
     </header>
