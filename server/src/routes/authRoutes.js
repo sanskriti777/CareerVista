@@ -2,8 +2,14 @@ const express = require("express");
 const rateLimit = require("express-rate-limit");
 const { registerUser } = require("../controllers/authController");
 const { loginUser } = require("../controllers/loginController");
-const { getCurrentUser, updateCurrentUser } = require("../controllers/userController");
+const {
+  getCurrentUser,
+  updateCurrentUser,
+  uploadProfilePicture,
+  deleteProfilePicture,
+} = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
+const { uploadAvatar } = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
 
@@ -43,5 +49,7 @@ router.post("/register", registerLimiter, registerUser);
 router.post("/login", loginLimiter, loginUser);
 router.get("/me", protect, getCurrentUser);
 router.put("/me", protect, updateCurrentUser);
+router.post("/profile-picture", protect, uploadAvatar, uploadProfilePicture);
+router.delete("/profile-picture", protect, deleteProfilePicture);
 
 module.exports = router;
