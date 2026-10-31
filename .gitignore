@@ -30,3 +30,9 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Uploads and temporary files
+uploads/
+server/uploads/
+~$*
+*.tmp

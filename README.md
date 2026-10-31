@@ -297,7 +297,7 @@ Candidate profile strength is evaluated across 12 criteria spanning 4 categories
 
 ### Step 1: Clone the Repository
 ```bash
-git clone <repository_url>
+git clone https://github.com/sanskriti777/CareerVista.git
 cd CareerVista
 ```
 
@@ -407,8 +407,19 @@ CareerVista/
 
 ---
 
-## 13. Academic Documentation & Citations
+## 13. Academic Documentation & Deliverables
 
-This platform and its accompanying technical reports were developed as an academic Non-Teaching Credit Course (NTCC) Minor Project:
-- **Comprehensive Project Report:** [docs/CareerVista_NTCC_Project_Report_Revised.md](docs/CareerVista_NTCC_Project_Report_Revised.md)
-- **Detailed System Architecture:** [docs/system-architecture.md](docs/system-architecture.md)
+This platform and its accompanying technical deliverables were developed as an academic Non-Teaching Credit Course (NTCC) Minor Project:
+- **Comprehensive Project Report (Revised):** [Markdown](docs/CareerVista_NTCC_Project_Report_Revised.md) | [PDF Document](docs/CareerVista_NTCC_Project_Report_Revised.pdf) | [DOCX Document](docs/CareerVista_NTCC_Project_Report_Revised.docx)
+- **Academic Research Paper:** [Markdown Draft](docs/CareerVista_Research_Paper.md) | [DOCX Document](docs/CareerVista_Research_Paper.docx)
+- **System Architecture & Technical Specification:** [docs/system-architecture.md](docs/system-architecture.md)
+- **Evaluation & System Architecture Figures:** Located in [`docs/figures/`](docs/figures/) (System Architecture, DFD Levels 0–2, ER Diagram, Latency Benchmarks, Profile Progression, and Matching Weights)
+
+---
+
+## 14. Project Status & Author
+
+- **Status:** Active / Production-Ready MVP
+- **Author:** Sanskriti Keshari ([@sanskriti777](https://github.com/sanskriti777))
+- **Repository:** [https://github.com/sanskriti777/CareerVista](https://github.com/sanskriti777/CareerVista)
+- **License:** Educational and Academic Project under MIT License
