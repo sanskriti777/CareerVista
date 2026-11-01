@@ -3,6 +3,10 @@ const rateLimit = require("express-rate-limit");
 const { registerUser } = require("../controllers/authController");
 const { loginUser } = require("../controllers/loginController");
 const {
+  forgotPassword,
+  resetPassword,
+} = require("../controllers/passwordResetController");
+const {
   getCurrentUser,
   updateCurrentUser,
   uploadProfilePicture,
@@ -45,8 +49,43 @@ const registerLimiter = rateLimit({
   },
 });
 
+/**
+ * Forgot password rate limiter: Maximum 5 requests per 15 minutes per IP
+ */
+const forgotPasswordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    return res.status(429).json({
+      success: false,
+      message: "Too many password reset requests. Please try again later.",
+    });
+  },
+});
+
+/**
+ * Reset password rate limiter: Maximum 10 requests per 15 minutes per IP
+ */
+const resetPasswordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    return res.status(429).json({
+      success: false,
+      message: "Too many reset attempts. Please try again later.",
+    });
+  },
+});
+
 router.post("/register", registerLimiter, registerUser);
 router.post("/login", loginLimiter, loginUser);
+router.post("/forgot-password", forgotPasswordLimiter, forgotPassword);
+router.post("/reset-password", resetPasswordLimiter, resetPassword);
+router.post("/reset-password/:token", resetPasswordLimiter, resetPassword);
 router.get("/me", protect, getCurrentUser);
 router.put("/me", protect, updateCurrentUser);
 router.post("/profile-picture", protect, uploadAvatar, uploadProfilePicture);

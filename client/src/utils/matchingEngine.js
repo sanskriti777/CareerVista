@@ -214,8 +214,8 @@ export const getJobMatchScore = (user, job) => {
   const jobLocation = normalizeString(job.location || "");
   const jobType = normalizeString(job.type || "");
 
-  let locationScore = 0;
-  let locationMatch = false;
+  let locationScore;
+  let locationMatch;
 
   const isRemote =
     jobLocation.includes("remote") ||
@@ -248,7 +248,7 @@ export const getJobMatchScore = (user, job) => {
     Math.max(0, skillsScore + roleScore + locationScore)
   );
 
-  let label = "Low Match";
+  let label;
   if (totalScore >= 80) {
     label = "Strong Match";
   } else if (totalScore >= 60) {

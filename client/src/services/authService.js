@@ -141,3 +141,58 @@ export const deleteProfilePicture = async () => {
     };
   }
 };
+
+/**
+ * Requests a password reset email for the given account email
+ *
+ * @param {string} email
+ * @returns {Promise<{ success: boolean, message: string, devResetUrl?: string }>}
+ */
+export const forgotPassword = async (email) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Forgot password request error:", error);
+    return {
+      success: false,
+      message: "Unable to connect to server. Please check your connection.",
+    };
+  }
+};
+
+/**
+ * Submits a new password along with the single-use reset token
+ *
+ * @param {string} token
+ * @param {string} password
+ * @returns {Promise<{ success: boolean, message: string }>}
+ */
+export const resetPassword = async (token, password) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/auth/reset-password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token, password }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Reset password request error:", error);
+    return {
+      success: false,
+      message: "Unable to connect to server. Please check your connection.",
+    };
+  }
+};

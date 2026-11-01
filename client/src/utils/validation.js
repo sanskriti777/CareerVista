@@ -99,3 +99,63 @@ export function validateRegister(data = {}) {
 
   return errors;
 }
+
+/**
+ * Validates forgot password email input
+ *
+ * @param {string} email
+ * @returns {Object} errors
+ */
+export function validateForgotPassword(email) {
+  const errors = {};
+
+  if (typeof email !== "string" || !email.trim()) {
+    errors.email = "Email is required.";
+  } else {
+    const trimmedEmail = email.trim();
+    if (trimmedEmail.length > 254) {
+      errors.email = "Email must be 254 characters or fewer.";
+    } else if (!EMAIL_REGEX.test(trimmedEmail)) {
+      errors.email = "Please enter a valid email address.";
+    }
+  }
+
+  return errors;
+}
+
+/**
+ * Validates reset password inputs with strict complexity rules
+ *
+ * @param {string} password
+ * @param {string} confirmPassword
+ * @returns {Object} errors
+ */
+export function validateResetPassword(password, confirmPassword) {
+  const errors = {};
+
+  if (typeof password !== "string" || !password) {
+    errors.password = "Password is required.";
+  } else if (!password.trim()) {
+    errors.password = "Password is required.";
+  } else if (password.length < 8) {
+    errors.password = "Password must be at least 8 characters.";
+  } else if (password.length > 72) {
+    errors.password = "Password must be 72 characters or fewer.";
+  } else if (!/[A-Z]/.test(password)) {
+    errors.password = "Password must contain at least one uppercase letter.";
+  } else if (!/[a-z]/.test(password)) {
+    errors.password = "Password must contain at least one lowercase letter.";
+  } else if (!/\d/.test(password)) {
+    errors.password = "Password must contain at least one number.";
+  } else if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
+    errors.password = "Password must contain at least one special character.";
+  }
+
+  if (typeof confirmPassword !== "string" || !confirmPassword) {
+    errors.confirmPassword = "Please confirm your password.";
+  } else if (password !== confirmPassword) {
+    errors.confirmPassword = "Passwords do not match.";
+  }
+
+  return errors;
+}

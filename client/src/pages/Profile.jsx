@@ -166,13 +166,8 @@ function Profile() {
     }
   };
 
-  const avatarInitial = user?.name ? user.name.charAt(0).toUpperCase() : "U";
   const userName = user?.name || "User";
-  const userHeadline = user?.headline || "Add a headline";
   const userEmail = user?.email || "Not provided";
-  const userPhone = user?.phone || "Not provided";
-  const userLocation = user?.location || "Not provided";
-  const userPreferredRole = user?.preferredRole || "Not provided";
   const userResumeUrl = user?.resumeUrl || "";
   const userBio = user?.bio || "";
   const userSkills =
@@ -348,7 +343,7 @@ function Profile() {
     setEducationErrorMessage("");
     setIsEducationSubmitting(true);
 
-    let updatedEducationList = [];
+    let updatedEducationList;
 
     if (editingEducation) {
       // Edit existing entry
@@ -503,7 +498,7 @@ function Profile() {
     setExperienceErrorMessage("");
     setIsExperienceSubmitting(true);
 
-    let updatedExperienceList = [];
+    let updatedExperienceList;
 
     if (editingExperience) {
       // Edit existing entry
@@ -628,7 +623,7 @@ function Profile() {
     setProjectErrorMessage("");
     setIsProjectSubmitting(true);
 
-    let updatedProjectList = [];
+    let updatedProjectList;
 
     if (editingProject) {
       // Edit existing entry

@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import {
   FaSearch,
   FaCalendarAlt,
-  FaCheckCircle,
-  FaBullseye,
   FaUserEdit,
 } from "react-icons/fa";
 import MainLayout from "../layouts/MainLayout";

@@ -55,7 +55,7 @@ export function SavedJobsProvider({ children }) {
     };
   }, [fetchSavedJobs]);
 
-  const toggleSaveJob = async (jobId, targetJobObj = null) => {
+  const toggleSaveJob = async (jobId) => {
     const token = localStorage.getItem("token");
     if (!token) {
       alert("Please log in to save jobs");
